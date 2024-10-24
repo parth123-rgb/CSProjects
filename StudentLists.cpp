@@ -21,7 +21,7 @@ This program is called student list. It allows the user to enter a new student n
 #include <iostream>
 #include <cstring>
 #include <vector>
-
+#include <iomanip>
 
 
 
@@ -142,7 +142,7 @@ void addFunction(vector<Student*> & v) { // passing the vector (with the struct 
 void printFunction(vector<Student*> v) {
   for (vector<Student*>:: iterator it = v.begin(); it != v.end(); it++) {
     // create an iterator, then we will print out the all the student information when the user wishes to
-    cout << (*it) -> firstName << " " << (*it) -> lastName << ", " << (*it) -> studentID << ", " << (*it) -> studentGPA << endl;
+    cout << (*it) -> firstName << " " << (*it) -> lastName << ", " << (*it) -> studentID << ", " << fixed << setprecision(2) << (*it) -> studentGPA << endl;
   }
 
 
