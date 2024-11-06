@@ -5,13 +5,13 @@
 using namespace std;
 
 
-parent::parent() {
+DigitalMedia::DigitalMedia() {
   cout << "Parent Conustructor" << endl;
-  
+  int getYear = 0;
 
 }
 
-void parent::getTitle() {
+void DigitalMedia::getTitle() {
 
   cout << "Please emter the title to your digital media: " << endl;
   cin >> title;
@@ -20,7 +20,7 @@ void parent::getTitle() {
 }
 
 
-int parent::getYear() {
+int DigitalMedia::getYear() {
   cout << "Please enter the year your digital media was created: " << endl;
   cin >> year;
   cout << "The year your digital media was created is: " << year << endl;

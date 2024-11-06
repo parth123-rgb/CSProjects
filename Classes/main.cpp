@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cstring>
 #include <vector>
-// #include "game.h"
+#include "game.h"
 #include "parent.h"
 
 
@@ -93,4 +93,3 @@ void mediaFunction(vector<DigitalMedia*>& media) {
   
 
 }
-

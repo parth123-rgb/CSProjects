@@ -7,11 +7,14 @@
 using namespace std;
 
 
-Videogame::VideoGame() {
-  cout << "Videogame consturctor" << endl;
+Videogame::Videogame() {
+  //cout << "Videogame consturctor" << endl;
   int rating = 0;
   int year = 0;
 
+  getPublisher();
+  getRating();
+  
 }
 
 
@@ -33,17 +36,23 @@ void game::year() {
 int Videogame::getPublisher() {
 
   cout << "Please enter the publisher of your video game: " << endl;
-  cin.getline(publisher, 50, '\n');
-  cin.ignore();
-  cout << "The publisher of" << title << "is: " << publisher;
+  cin >> publisher;
+  //cin.ignore();
+  cout << "The publisher of " << title << " is: " << publisher << endl;
   
 }
 
 int Videogame::getRating() {
 
-  cout << "Enter the rating of (1-5)" << title << ": " << endl;
+  cout << "Enter the rating of " << title << ": (1-5)" << endl;
   cin >> rating;
-  cout << title << "is " << rating << "stars" << endl;
+  cout << title << "is " << rating << " stars" << endl;
+
+  cout << "YOUR GAME INFO: " << endl;
+  cout << "Name: " << title << endl;
+  cout << "Year created: " << year << endl;
+  cout << "Publisher: " << publisher << endl;
+  cout << "Rating of game: " << rating << " stars" << endl;
 
 }
 
