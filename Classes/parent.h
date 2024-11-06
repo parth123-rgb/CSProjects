@@ -9,6 +9,8 @@ class DigitalMedia {
   int year;
 
  public:
+  parent();
   DigitalMedia(char* title, int year);
-  
+  void getTitle();
+  int getYear();
 };

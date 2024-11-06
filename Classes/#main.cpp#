@@ -80,7 +80,7 @@ void mediaFunction(vector<DigitalMedia*>& media) {
 
   if (strcmp(input, "VIDEOGAMES") == 0) {
 
-    Videogame* v = new Videogame();
+    // Videogame* v = new Videogame();
 
     }
 

@@ -7,10 +7,11 @@ using namespace std;
 class Videogame : DigitalMedia  {
 
  public:
-  VideoGame()
+  VideoGame();
   char publisher[50];
   int rating;
-  
+  int getPublisher();
+  int getRating();
  protected:
   
 
