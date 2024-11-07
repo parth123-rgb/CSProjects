@@ -1,0 +1,54 @@
+#include <iostream>
+#include <cstring>
+#include "music.h"
+
+using namespace std;
+
+x
+Music::Music() {
+
+  int duration = 0;
+  int year = 0;
+  // publisher, artist, duration we code here
+  getPublisher();
+  getArtist();
+  getDuration();
+
+}
+
+
+
+int getPublisher() {
+
+  cout << "Enter the publisher of this song: " << endl;
+  cin.getline(publisher, 50, '\N');
+  cout << "The publisher of your song is: " << publisher << endl;
+
+
+
+
+}
+
+
+int getArtist() {
+
+  cout << "Enter the artist of this song: " << endl;
+  cin.getline(artist, 50, '\N');
+  cout << "The artist of this song is: " << artist << endl;
+
+
+}
+
+
+
+
+int getDuration() {
+
+  cout << "Please enter the duration of your song: " << endl;
+  cin.getline(duration, 50, '\n');
+  cout << "The duration of your song is: " << duration << endl;
+
+
+
+}
+

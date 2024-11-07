@@ -4,17 +4,17 @@
 
 using namespace std;
 
-class Videogame : DigitalMedia  {
+class Music : DigitalMedia {
 
  public:
-  Videogame();
+  Music();
+  char artist[50];
+  //int duration;
+  char duration[30];
   char publisher[50];
-  int rating;
+
   void getPublisher();
-  void getRating();
-  //protected:
-  
+  void getArtist();
+  void getDuration();
 
 };
-
-  

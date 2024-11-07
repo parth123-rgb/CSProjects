@@ -33,7 +33,7 @@ void game::year() {
 }
 */
 
-int Videogame::getPublisher() {
+void Videogame::getPublisher() {
 
   cout << "Please enter the publisher of your video game: " << endl;
   cin >> publisher;
@@ -42,7 +42,7 @@ int Videogame::getPublisher() {
   
 }
 
-int Videogame::getRating() {
+void Videogame::getRating() {
 
   cout << "Enter the rating of " << title << ": (1-5)" << endl;
   cin >> rating;

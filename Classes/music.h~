@@ -1,0 +1,16 @@
+#include <iostream>
+#include <cstring>
+#include "parent.h"
+
+class Music : DigitalMedia {
+
+ public:
+  char artist[50];
+  int duration;
+  char publisher[50];
+
+  int getPublisher();
+  int getArtist();
+  int getDuration();
+
+};

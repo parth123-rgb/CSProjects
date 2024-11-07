@@ -3,6 +3,8 @@
 #include <vector>
 #include "game.h"
 #include "parent.h"
+#include "music.h"
+#include "movies.h"
 
 
 using namespace std;
@@ -26,6 +28,7 @@ int main() {
 
   
   cin >> addFunction;
+  cin.ignore();
 
   if (strcmp(addFunction, "ADD") == 0)
     {
@@ -63,33 +66,39 @@ void mediaFunction(vector<DigitalMedia*>& media) {
 
   char input[15]; 
 
-  /*
-  char title[50];
-  int year;
-  char publisher[50];
-  int rating;
-  char artist[50];
-  char duration[10];
-  char director[50];
-  */
-
-
   cout << "What type of media do you wish to add? (Type VIDEOGAMES / MUSIC / MOVIES)" << endl;
 
   cin >> input;
-
+  cin.ignore();
+  
   if (strcmp(input, "VIDEOGAMES") == 0) {
 
     Videogame* v = new Videogame();
 
     }
+  else if (strcmp(input, "MUSIC") == 0) {
+
+    Music* m = new Music();
+
+  }
+  else if (strcmp(input, "MOVIES") == 0) {
+
+
+    Movies* m = new Movies();
+  }
+
+}
 
 
 
+void searchFunction(vector<DigitalMedia*> media) {
 
 
-  
-  
-  
+for (vector<DigitalMedia*>:: iterator it = media.begin(); it != media.end(); it++) {
+    // create an iterator, then we will print out the all the student information when the user wishes to
+    cout << (*it) ->  << " " << (*it) -> lastName << ", " << (*it) -> studentID << ", " << fixed << setprecision(2) << (*it) -> studentGPA << endl;
+  }
+
+
 
 }

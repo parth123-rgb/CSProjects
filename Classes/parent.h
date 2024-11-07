@@ -15,7 +15,7 @@ class DigitalMedia {
   DigitalMedia();
   DigitalMedia(char* title, int year);
   void getTitle();
-  int getYear();
+  void getYear();
 };
 
 #endif
