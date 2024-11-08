@@ -102,6 +102,7 @@ for (vector<DigitalMedia*>:: iterator it = media.begin(); it != media.end(); it+
 
 
 }
+File Edit Options Buffers Tools C++ Help
 
   cin >> input;
 

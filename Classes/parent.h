@@ -14,8 +14,8 @@ class DigitalMedia {
  public:
   DigitalMedia();
   DigitalMedia(char* title, int year);
-  void getTitle();
-  void getYear();
+  char* getTitle();
+  int getYear();
 };
 
 #endif

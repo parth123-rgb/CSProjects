@@ -37,6 +37,13 @@ void Movies::getRating() {
 
   cout << "Enter the rating of the movie: " << endl;
   cin.getline(rating, 40, '\n');
+  
+
+}
+
+
+void Movies::printFunction() {
+
 
   cout << "MOVIE INFO: " << endl;
   cout << "Movie name: " << title << endl;
@@ -45,6 +52,9 @@ void Movies::getRating() {
   cout << "Movie Duration: " << duration << endl;
   cout << "Movie rating: " << rating << endl;
 
-  
+
+
+
+
 
 }

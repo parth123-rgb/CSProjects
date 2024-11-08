@@ -40,26 +40,4 @@ void Videogame::getPublisher() {
   //cin.ignore();
   cout << "The publisher of " << title << " is: " << publisher << endl;
   
-}
-
-void Videogame::getRating() {
-
-  cout << "Enter the rating of " << title << ": (1-5)" << endl;
-  cin >> rating;
-  cout << title << "is " << rating << " stars" << endl;
-
-}
-
-void printInfo() {
-
-  cout << "YOUR GAME INFO: " << endl;
-  cout << "Name: " << title << endl;
-  cout << "Year created: " << year << endl;
-  cout << "Publisher: " << publisher << endl;
-  cout << "Rating of game: " << rating << " stars" << endl;
-
-
-
-
-}
 
