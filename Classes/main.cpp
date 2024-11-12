@@ -46,17 +46,11 @@ int main() {
 
 	}
       else if (strcmp(addFunction, "QUIT") == 0) {
-
+	cout << "Thanks for playing classes!" << endl;
 	    exit(0);
-	         }
+	     }
 	
 }
-
-
-
-
-
-
 
 
 
@@ -91,14 +85,26 @@ void mediaFunction(vector<DigitalMedia*>& media) {
 
 
 
+
+
 void searchFunction(vector<DigitalMedia*> media) {
 
+  char searchInput[15];
+  cout << "Please enter the Digital Media Year or Name you want to search through " << endl;
+  cin.getline(searchInput, 15, '\n');
+  
+  
 
-for (vector<DigitalMedia*>:: iterator it = media.begin(); it != media.end(); it++) {
+  
+  for (vector<DigitalMedia*>:: iterator it = media.begin(); it != media.end(); it++) {
     // create an iterator, then we will print out the all the student information when the user wishes to
+
+    if (strcmp(searchInput,  
+
     cout << (*it) ->  << " " << (*it) -> lastName << ", " << (*it) -> studentID << ", " << fixed << setprecision(2) << (*it) -> studentGPA << endl;
   }
 
 
 
 }
+x

@@ -11,17 +11,22 @@ DigitalMedia::DigitalMedia() {
   getYear();
 }
 
-void DigitalMedia::getTitle() {
+char* DigitalMedia::getTitle() {
 
+   // change in the parnet.h file
+
+  
   cout << "Please enter the title to your digital media: " << endl;
   cin.getline(title, 50, '\n');
   //cin.ignore();
   cout << "Your digital media title is: " << title << endl;
+
+ 
   
 }
 
 
-void DigitalMedia::getYear() {
+int DigitalMedia::getYear() {
   cout << "Please enter the year your digital media was created: " << endl;
   cin >> year;
   cin.ignore();
