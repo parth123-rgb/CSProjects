@@ -1,4 +1,9 @@
+#ifndef CLASSES
+#define CLASSES
+
 #include <cstring>
+
+using namespace std;
 
 class DigitalMedia {
 
@@ -7,6 +12,10 @@ class DigitalMedia {
   int year;
 
  public:
-  DigitalMedia(char* title, int year)
-  
-}
+  DigitalMedia();
+  DigitalMedia(char* title, int year);
+  char* getTitle();
+  int getYear();
+};
+
+#endif

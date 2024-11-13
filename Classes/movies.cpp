@@ -6,14 +6,14 @@ using namespace std;
 
 Movies::Movies() {
 
-  int year = 0;
+  //  int year = 0;
 
   // director, duration, and rating we code here
   getDirector();
   getDuration();
   getRating();
 
-
+  printFunction();
 }
 
 
@@ -37,6 +37,12 @@ void Movies::getRating() {
 
   cout << "Enter the rating of the movie: " << endl;
   cin.getline(rating, 40, '\n');
+  
+
+}
+
+void Movies::printFunction() {
+
 
   cout << "MOVIE INFO: " << endl;
   cout << "Movie name: " << title << endl;
@@ -45,6 +51,14 @@ void Movies::getRating() {
   cout << "Movie Duration: " << duration << endl;
   cout << "Movie rating: " << rating << endl;
 
+
+
+}
+
+Movies:: ~Movies() {
+
+  delete duration;
+  delete director;
   
 
 }

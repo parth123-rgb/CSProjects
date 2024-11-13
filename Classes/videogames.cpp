@@ -7,14 +7,15 @@
 using namespace std;
 
 
-Videogame::Videogame() {
+Videogame::Videogame() : DigitalMedia() {
   //cout << "Videogame consturctor" << endl;
-  int rating = 0;
-  int year = 0;
+    //  int rating = 0;
+    //year = 0;
 
   getPublisher();
   getRating();
-  
+  printFunction();
+
 }
 
 
@@ -38,7 +39,7 @@ void Videogame::getPublisher() {
   cout << "Please enter the publisher of your video game: " << endl;
   cin >> publisher;
   //cin.ignore();
-  cout << "The publisher of " << title << " is: " << publisher << endl;
+  //cout << "The publisher of " << title << " is: " << publisher << endl;
   
 }
 
@@ -48,12 +49,24 @@ void Videogame::getRating() {
   cin >> rating;
   cout << title << "is " << rating << " stars" << endl;
 
+}
+
+void Videogame::printFunction() {
+
   cout << "YOUR GAME INFO: " << endl;
-  cout << "Name: " << title << endl;
+  cout << "Title: " << title << endl;
   cout << "Year created: " << year << endl;
   cout << "Publisher: " << publisher << endl;
   cout << "Rating of game: " << rating << " stars" << endl;
 
+
+
+
 }
 
+Videogame:: ~Videogame() {
 
+  delete publisher;
+  
+
+}
