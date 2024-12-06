@@ -60,7 +60,7 @@ void createRooms(vector<Room*>& room) {
   strcpy(roomEleven, "Attic");
 
   char* roomTwelve = new char[10];
-  strcpy(roomTwelve, "Baclony");
+  strcpy(roomTwelve, "Balcony");
 
 
     char* roomThirteen = new char[10];
@@ -70,7 +70,7 @@ void createRooms(vector<Room*>& room) {
   strcpy(roomFourteen, "Rooftop");
 
  char* roomFifteen = new char[35];
-  strcpy(roomFifteen, "Outside entrance");
+  strcpy(roomFifteen, "Outside");
 
    char* roomSixteen = new char[30];
   strcpy(roomSixteen, "Lecture Theater");
@@ -236,72 +236,66 @@ void createRooms(vector<Room*>& room) {
     char* East = new char[6];
     strcpy(East, "EAST");
    
-   
-   
-   
-   
-   
-    livingRoom->setExit(South, hallway);
-    outside -> setExit(West, pub);
-outside -> setExit(North, onetwenty);
+ entrance->setExit(North, hallway);
 
-entrance -> setExit(North, hallway);
+// Hallway
+hallway->setExit(South, entrance);
+hallway->setExit(North, studyRoom);
+hallway->setExit(East, livingRoom);
+hallway->setExit(West, kitchen);
 
-hallway -> setExit(South, entrance);
-hallway -> setExit(West, kitchen);
-hallway -> setExit(East, livingRoom);
-hallway -> setExit(North, studyRoom);
+// Study Room
+studyRoom->setExit(South, hallway);
+studyRoom->setExit(West, library);
 
-kitchen -> setExit(West, hallway);
-kitchen -> setExit(North, lunchHall);
+// Living Room
+livingRoom->setExit(North, library);
+livingRoom->setExit(South, hallway);
+livingRoom->setExit(East, garden);
+livingRoom->setExit(West, hallway);
 
+// Library
+library->setExit(South, livingRoom);
+library->setExit(East, studyRoom);
+
+// Garden
+garden->setExit(West, livingRoom);
+garden->setExit(South, lunchHall);
+garden->setExit(East, balcony);
+
+// Lunch Hall
+lunchHall->setExit(North, garden);
+lunchHall->setExit(South, basement);
+lunchHall->setExit(West, kitchen);
+
+// Basement
+basement->setExit(North, classroom);
+basement->setExit(East, attic);
+
+// Classroom
+classroom->setExit(South, basement);
+classroom->setExit(West, bathroom);
+classroom->setExit(East, attic);
+
+// Bathroom
+bathroom->setExit(East, classroom);
+
+// Attic
+attic->setExit(South, basement);
+attic->setExit(North, rooftop);
+
+// Rooftop
+rooftop->setExit(South, attic);
+ rooftop -> setExit(North, outside);
 
  
- livingRoom -> setExit(West, hallway);
- livingRoom -> setExit(North, library);
- livingRoom -> setExit(East, garden);
-
- classroom -> setExit(South, basement);
-classroom -> setExit(West, bathroom);
-
- bathroom -> setExit(East, classroom);
-
- studyRoom -> setExit(South, hallway);
- studyRoom -> setExit(West, library);
-// studyRoom -> setItem(book);
-
- 
- library -> setExit(South, livingRoom);
- library -> setExit(East, studyRoom);
-
-
- 
- garden -> setExit(West, livingRoom);
- garden -> setExit(North, lunchHall);
- garden ->setExit(East, balcony);
-
- lunchHall -> setExit(South, garden);
- lunchHall -> setExit(West, kitchen);
-
- basement -> setExit(North, classroom);
- basement -> setExit(East, attic);
-
- attic -> setExit(West, basement);
- attic -> setExit(North, rooftop);
-
- balcony -> setExit(West, garden);
- balcony -> setExit(North, garage);
-
- garage -> setExit(South, balcony);
-
- rooftop -> setExit(South, attic);
-
-
-
-//    classroom->setExit(East, NULL);  // No exit yet
-
-    // Set another exit
-    livingRoom->setExit(East, classroom);
+// Outside
+outside->setExit(North, onetwenty);
+outside->setExit(West, pub);
+  
+   
+   
+   
 }
 
 
@@ -314,7 +308,7 @@ void playGame(vector<Room*>& room, vector<Item*>& inventory, bool& stillPlaying)
 
     while (stillPlaying) {
         // Get the room description and check for the win condition
-                char* descr = currentRoom->getDescription();
+       currentRoom->getDescription();
 
         // Prompt for actions
         cout << "Type 'GO' to move" << endl;
@@ -389,15 +383,19 @@ void playGame(vector<Room*>& room, vector<Item*>& inventory, bool& stillPlaying)
             }
 
         // If the player has won or quit the game
-        if (strcmp(currentRoom -> winCondition(), "CONTINUE") == 0) {
+
+	stillPlaying = currentRoom -> winCondition(currentRoom, room[0]);
+	//currentRoom = room[0];
+	//if (currentRoom -> winCondition() == true) {
 //        char* winCondition = currentRoom->winCondition();
 
          //   cout<<"getting here?"<<endl;
-          //currentRoom = room[0];
+         //currentRoom = room[0];
         //  cout << "Your current room is the: Entrance " << endl;
-            stillPlaying = true;  // Allow the player to start a new game
+	//  stillPlaying = true;  // Allow the player to start a new game
         }
-    }
+    
+//return false;
 }
 
 

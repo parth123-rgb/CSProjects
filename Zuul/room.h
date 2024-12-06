@@ -14,7 +14,7 @@ public:
     Room(char* descrip);
     void setExit(char* direction, Room* room);
     Room* getExit(char* direction);
-    char* getDescription();
+    void getDescription();
     void setItem(char* itemName, Item* item);  // Add an item to the room
     Item* getItem(char* itemName);  // Get an item from the room
     void itemRemove(char* itemName);
@@ -23,7 +23,7 @@ public:
     map<char*, Item*> items;
     void itemDrop(Item* item);
     bool userPlay = true;
-    char* winCondition();
+  bool winCondition(Room*& currentRoom, Room* entrance);
 
 };
 

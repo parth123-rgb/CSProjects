@@ -20,18 +20,18 @@ Room* Room::getExit(char* direction) {
     for (auto it = exits.begin(); it != exits.end(); it++) {
 
       //cout << "for loop" << endl;
-         cout << direction << endl;
+      //cout << direction << endl;
 
 	 if (strcmp (it->first, direction) == 0) {
 
-	   cout << it -> second -> getDescription() << endl;
+	   //	   cout << it -> second -> getDescription() << endl;
 	   return it->second;
         }
     }
     return NULL;
 }
 
-char* Room::getDescription() {
+void Room::getDescription() {
     cout << "Your current room is the: " << description << endl;
 
 
@@ -57,8 +57,9 @@ char* Room::getDescription() {
 
 }
 
-char* Room::winCondition(){
-    if (strcmp(description, "Study Room") == 0) {
+
+bool Room::winCondition(Room*& currentRoom, Room* entrance) {
+    if (strcmp(description, "Room One Twenty") == 0) {
         cout << "You won! You reached the best room (because Parth is in it)!" << endl;
         cout << "Do you wish to play again? (Yes/No): " << endl;
         char replay[5];
@@ -66,18 +67,19 @@ char* Room::winCondition(){
         cin.ignore();  // Ignore the newline left by cin
     
         if (strcmp(replay, "Yes") == 0) {
-                 char* continueGame = new char[9];  // Allocate space for "CONTINUE" (8 + '\0')
-    strcpy(continueGame, "CONTINUE");
-    return continueGame; 
+	  currentRoom = entrance;
+	  //char* continueGame = new char[9];  // Allocate space for "CONTINUE" (8 + '\0')
+		 //strcpy(continueGame, "CONTINUE");
+    return true; 
             // If the player chooses to play again, return a pointer to "CONTINUE"
            
         }
         else if (strcmp(replay, "No") == 0) {
             cout << "Thank you for playing!" << endl;
-          //  exit(0);
+	    return false;
         }
     }
-
+    return true;
 }
 
 
