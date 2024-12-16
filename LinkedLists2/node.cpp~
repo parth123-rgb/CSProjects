@@ -1,0 +1,22 @@
+#include <iostream>
+#include <cstring>
+
+using namespace std;
+
+
+Node::Node(Student* newStudent) {
+
+
+  Student* student = new Student();
+  next = NULL;
+
+
+}
+
+Node::~Node(){
+
+
+  delete student;
+
+
+}
