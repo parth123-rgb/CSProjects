@@ -151,10 +151,51 @@ int main() {
   cout << "If you want to quit the system type 'QUIT'" << endl;
 
   cin>>input;
-  
+   if (strcmp(input, "ADD")==0) {
+      
+      char manualStudent[50];
+      
+      cout << "Do you want to add the student's manually (yes/no)?" << endl;
+      cin >> manualStudent;
+      
+if (strcmp(manualStudent, "yes") == 0) {  // Fix comparison
 
-  if (strcmp(input, "ADD")==0) {
 
+  // create new variables if the user wants to enter the info manually
+  char* firstName = new char[20];
+
+  char* lastName = new char[20];
+
+  float studentGPA;
+
+  int studentID;
+
+
+  // read them in te from the user
+    cout << "Enter the first name:" << endl;
+    cin >> firstName;
+    
+    cout << "Enter the last name: " << endl;
+    cin >> lastName;
+    
+    cout << "Enter the student GPA:" << endl;
+    cin >> studentGPA;
+    
+    cout << "Enter the student ID: " << endl;
+    cin >> studentID;
+
+
+    // create nwe student
+    Student* newStudent = new Student(firstName, lastName, studentID, studentGPA);
+    
+    ADD(newNode, hashtable, size, newStudent);
+    // call add function
+}
+
+    else if (strcmp(manualStudent, "no")==0) {
+
+
+      int numberOfStudents;
     cout << "Enter the number of students you wish to ADD" << endl;
     
     cin >> numberOfStudents;
@@ -181,12 +222,14 @@ int main() {
 
      studentID = round(rand()%100000); 
 
-    }
+    
      
+    }
+
+    // getting random names from the file    
       random=rand()%50;
 
-      
-      Student* newStudent = new Student(firstNames[random], lastNames[random], studentID, studentGPA);
+    Student* newStudent = new Student(firstNames[random], lastNames[random], studentID, studentGPA);
       
       //      cout << "First name:" << firstNames[random]<<"Last names:" << lastNames[random] <<endl;
 
@@ -194,10 +237,14 @@ int main() {
 
     
     ADD(newNode, hashtable, size, newStudent); 
-    }
     
-
+   }
   }
+}
+
+
+
+
   else if (strcmp(input, "PRINT") == 0) {
 
     
