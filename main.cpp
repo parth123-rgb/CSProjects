@@ -1,253 +1,58 @@
 #include <cstring>
 #include <iostream>
+//#include <sstring>
+#include <string>
 
 using namespace std;
 
 
-
-struct Node {
-
-
-  Node* head;
-  Node* next;
-
-  char firstName[50];
-  char lastName [50];
-  int studentID;
-  float studentGPA;
-  
-  
-
-
-
-
-};
+void ADD(int* heap, int number, int& size);
+void heapify(int size, int* heap);
+void PRINT(int position, int depth, int size, int* heap);
+void DELETE(int* heap, int size, int index);
 
   
-void ADD(Node* newNode, Node** hashtable, int size); 
-
-void rehash(Node* newNode, Node** hashtable, int size); 
-
-
-
-
-
-
 int main() {
 
-
-  int size = 100;
+  int heap[101];
+  bool stillPlaying = true;
+  int size = 1;
   
-  Node** hashtable = new Node*[size];
+ for (int i = 0; i < 101; i++) {
 
-  
-
-  
-  char input[50];
-  int id = 8;
-
-  cout << "If you want to add a student, type 'ADD'" << endl;
-  cout << "If you want to print a student, type 'PRINT'" << endl;
-  cout << "If you want to delete a studet, type 'DELETE" << endl;
-  cout << "If you want to quit the system type 'QUIT'" << endl;
-
-  cin>>input;
-
-  if (strcmp(input, "ADD")==0) {
-
-
-    Node* newNode = new Node();
-
-
-    
-    //    newNode -> firstName = "bob"; 
-    strcpy(newNode-> firstName, "bob");
-
-    strcpy(newNode-> lastName, "gupta");
-
-    newNode->studentGPA = 4.00;
-
-    newNode->studentID = 24;
-
-    
-
-
-    
-    
-    ADD(newNode, hashtable, size); 
-
-    
-
-  }
-  else if (strcmp(input, "PRINT")==0) {
-
-
-    
-
-    
-
-  }
-
-  else if (strcmp(input, "DELETE")==0) {
-
-    
-
-
-
-    
-  }
-
-  else if (strcmp(input, "QUIT") ==0) {
-
-
-
-    exit(0);
-
-
-  }
-	      
-	    
-
-  
-  return 0;
-
-
-  
-
-
-}
-
-
-void ADD(Node* newNode, Node** hashtable, int size) {
-
-
-  int ID = newNode -> studentID;
-
-  int index = ID%size;
-
-  if (hashtable[index] == NULL) {
-
-    //cout << " IASIGNED IT" <<endl;
-    hashtable[index] = newNode;
-    
-
+    heap[i] = 0;
 
 
   }
 
-  else if (hashtable[index]->next == NULL) {
 
-    hashtable[index] -> next = newNode;
+  while (stillPlaying) {
 
+  char input[30];
+   
+  cout << "Type 'ENTER' to enter numbers yourself" << endl;
+  cout << "Type 'FILE' to enter numbers from a file" << endl;
+  cout << "If you want to print the file, type 'PRINT'" << endl;
+  cout << "IF you want to delete either the largest or all nodes type 'DELETE'" << endl;
 
-
-  }
-
-  else if (hashtable[index]->next->next == NULL) {
-
-    hashtable[index] -> next -> next = newNode;
-
-
-
-  }
-
-  else {
-    
-    cout << "WE REACHED HERE" << endl;
-    rehash(newNode, hashtable, size);
+  cin >> input;
 
 
-  }
-  
+  if (strcmp(input, "ENTER")==0) {
 
-  
+    int amountOfNumbers;
 
+    cout << "Enter the AMOUNT of numbers you wish to add: " << endl;
+    cin >> amountOfNumbers;
 
+    for (int i = 0; i < amountOfNumbers; i++) { // this allows the node to be added EACH time, rather than all at once
 
+      int number;
 
-
-}
-
-
-void rehash(Node* newNode, Node** hashtable, int size) 
-
-
-{
-
-
-  //int ID = newNode -> studentID;
-
-  int newSize = size;
-  // ceating new size varirable
-  
-
-  int newIndex = newNode -> studentID%newSize; // taking index
-  // new index variable
-
-  size = size*2;
-  // multiplying size variable
-
-  Node** newHashTable = new Node*[size]();
-  // creatig new hash table
-  
-
-  
-  for (int i = 0; i < newSize; i++) {
-    newHashTable[i] = NULL;
-
-  } // checkcing the NULL 
-
-
-
-  //Node* temp = HashTable[i];
-
-  
-  for (int i = 0; i < size; ++i) {
-
-
-    Node* current = hashtable[i];
-
-    while (current != NULL) {
-
-      //  int newIndex = current->next;
-
-
-      if (newHashTable[newIndex] == NULL) {
-
-
-
-	newHashTable[newIndex] = current;
-
-
-      }
-      else {
-
-	Node* temp = newHashTable[newIndex];
-
-	while (temp->next != NULL) {
-
-
-	  temp = temp->next;
-
-
-	}
-
-
-	temp->next = current;
-
-
-      }
+      cout << "Enter a number: " << endl;
+      cin >> number;
       
-
-
-      
-      current->next = NULL;
-      current = newNode->next;
-
-      
-
-
-
+      ADD(heap, number, size);
 
     }
 
@@ -256,46 +61,32 @@ void rehash(Node* newNode, Node** hashtable, int size)
 
 
   }
-
- if (newHashTable[newIndex] == NULL) {
-
+  else if (strcmp(input, "PRINT") == 0) {
 
 
-    newHashTable[newIndex] = newNode;
+    PRINT(1, 0, size, heap);
 
+
+  }
+
+  else if (strcmp(input, "DELETE")==0) {
+
+
+    // add new variable asking if they want to add or delete all nodes too
+
+
+    
+
+    DELETE(heap, size, 0);
 
 
 
   }
 
-  else if (newHashTable[newIndex]->next == NULL) {
-
-
-
-    newHashTable[newIndex] -> next = newNode;
-
-
-
 
   }
-
   
-  else if (newHashTable[newIndex]->next->next == NULL) {
 
-    cout << "VAMOS" << endl;
-    newHashTable[newIndex] -> next -> next = newNode;
-
-
-
-  }
-
-
- delete[] hashtable; // deleting original hashtable
- hashtable = newHashTable; // setting old hash table to the new one
-
- size = newSize;
-
- cout << "New table created" << endl;
 
 
 
@@ -304,12 +95,137 @@ void rehash(Node* newNode, Node** hashtable, int size)
 
 
 
+void ADD(int* heap, int number, int& size) {
 
-void PRINT(Node* newNode) {
-
-
-
+  heap[size] = number; // set the spot in the heap equal to the number that the user entered.
+  size++; // then increase the size (index) by 1!
   
+
+  heapify(size-1, heap);
+
+
+}
+
+
+
+
+// this is essentially to ensure that all conditions are met, and that if the parnet node is not in the correct place, it fixes it!
+ void heapify(int tempIndex, int* heap) {
+
+   int parentNode = tempIndex/2;
+   // will use this for index
+
+   while (tempIndex > 1) {
+   if (heap[parentNode] < heap[tempIndex]) {
+
+     // while the value on the index of the parent node is less than the vlaue of the temorary index on the heap , than you must swap, the parent needs to be the higher value.
+
+
+
+     
+     // need to add sort method wehre it sawps them
+     int temp = heap[tempIndex];
+     
+     heap[tempIndex] = heap[parentNode];
+     heap[parentNode] = temp; // swap!
+     
+     heapify(parentNode, heap);
+     // check recursively
+   }
+   
+   
+   else if(heap[parentNode] > heap[tempIndex]) {
+     // the parnet node value is higher than the rst!
+     // the value at this index is ideal, keep the function going
+     return;
+
+
+
+   }
+
+   }
+ }
+
+
+
+
+
+
+
+
+
+
+void PRINT(int position, int depth, int size, int* heap) { // position is where currently am, depth is checking to see how far down the search tree to place something, size is the next open slot
+
+  // if right node is less than size
+  if (position*2+1 < size) {
+
+    // printing out the right node
+    PRINT(position*2+1, depth+1, size, heap);
+
+
+  }
+
+  for (int i = 0; i < depth; i++) {
+
+
+
+    cout << "\t"; // tabbing for each depth (so it goes further in the tree when needed)
+
+
+  }
+
+  cout << heap[position] << endl;
+
+
+  // if the less node is lower than the current node
+  if (position*2 < size) { 
+
+
+    PRINT(position*2, depth+1, size, heap); // print out the right node
+
+  }
+}
+
+
+
+
+
+void DELETE(int* heap, int size, int index) {
+
+  cout << heap[size-1];
+
+
+
+  int largest = index;
+  int left = 2 * index;
+  int right = 2 * index + 1;
+
+
+  if (left < size && heap[left] > heap[largest]) {
+
+
+    heap[largest] = heap[left]; // set the first node (largest node) equal to the last node.
+  size--;
+
+    
+
+  }
+
+  else if (right < size && heap[right] > heap[largest]) {
+
+
+
+  heap[1] = heap[right];
+  size--;
+
+
+
+  }
+  
+
+
+
 
 
 
