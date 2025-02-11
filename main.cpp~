@@ -1,0 +1,143 @@
+#include <cstring>
+#include <iostream>
+//#include <sstring>
+#include <string>
+
+using namespace std;
+
+
+void ADD(int* heap, int amountOfNumbers, int& size);
+void heapify(int size, int* heap);
+void PRINT(int position, int depth, int size, int* heap);
+
+
+  
+int main() {
+
+  int heap[101];
+  bool stillPlaying;
+
+  
+  if (int i = 0; i < 101; i++) {
+
+    heap[i] = 0;
+
+
+  }
+
+
+  while (stillPlaying) {
+
+  char input[30];
+   
+  cout << "Type 'ENTER' to enter numbers yourself" << endl;
+  cout << "Type 'FILE' to enter numbers from a file" << endl;
+  cout << "IF you want to delete either the largest or all nodes type 'DELETE'" << endl;
+
+
+
+  if (strcmp(input, "ENTER")==0) {
+
+    int amountOfNumbers;
+
+    cout << "Enter the AMOUNT of numbers you wish to add: " << endl;
+    cin >> amountOfNumbers;
+
+    for (int i = 0; i < amountOfNumbers; i++) { // this allows the node to be added EACH time, rather than all at once
+
+
+      cout << "Enter a number: " << endl;
+      ADD(heap, amountOfNumbers, size);
+
+    }
+
+
+
+
+
+  }
+
+
+  }
+  
+
+
+
+
+}
+
+
+
+
+void ADD(int* heap, int amountOfNumbers, int& size) {
+
+  heap[size] = size;
+  size = size+1;
+  
+
+  heapify(size, heap);
+
+
+}
+
+
+ void heapify(int size, int* heap) {
+
+   int parentNode = size/2;
+
+   while (heap[size] != 0) {
+   if (heap[parentNode] < heap[size]) { // if the parent node is not the greatest...
+
+     // need to add sort method wehre it sawps them
+     int temp = heap[size];
+     heap[size] = heap[parentNode];
+     heap[parentNode] = temp;
+     
+     heapify(parentNode, heap);
+     // check recursively
+   }
+
+   
+   else if(heap[parentNode] > heap[size]) {
+
+     // the value at this index is ideal, keep the function going
+     return;
+
+
+
+   }
+
+   }
+ }
+
+void PRINT(int position, int depth, int size, int* heap) { // position is where currently am, depth is checking to see how far down the search tree to place something, size is the next open slot
+
+  // if right node is less than size
+  if (position*2+1 < size) {
+
+    // printing out the right node
+    print(position*2+1, depth+1, size, heap);
+
+
+  }
+
+  for (int i = 0; i < depth; i++) {
+
+
+
+    cout << "\t"; // tabbing for each depth (so it goes further in the tree when needed)
+
+
+  }
+
+  cout << heap[position] << endl;
+
+
+  // if the less node is lower than the current node
+  if (position*2 < size) { 
+
+
+    print(pos*2, depth+1, size, heap); // print out the right node
+
+  }
+}
