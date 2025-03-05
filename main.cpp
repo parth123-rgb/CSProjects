@@ -30,9 +30,19 @@ int main() {
   int queue;
   Node* newNode = new Node();
  
-  PUSH(stackHead, newNode);
-  POP(stackHead);
-  PRINT(stackHead);
+  //PUSH(stackHead, newNode);
+  //POP(stackHead);
+  //PRINT(stackHead);
+
+  char prefixFunctiin[50];
+
+  cout << "enter an operator" << endl;
+  cin >> prefixFunction;
+
+  //cout << "Precedence of + is: " << precedence(input);
+
+
+
   
 
   return false;
@@ -74,11 +84,11 @@ Node* POP(Node* stackHead) {
 
   }
 
-  Node* temp = stackHead;
+  Node* temp = stackHead; 
   if (temp->next != NULL) { // while the current's next is NOT open, set the current node  equal to the current's next
 
-    stackHead = temp->next;
-    cout << temp -> data;
+    stackHead = temp->next; // edit ORIGINAL stackhead, and set it equal to the stackheads next.
+    //cout << temp -> data;
    
     return temp;
 
@@ -161,25 +171,81 @@ void ENQUEUE(Node* queueHead, Node* newNode) {
 
 
 
-void DEQUEUE(Node* queueHead, Node* newNode) {
+void DEQUEUE(Node*& queueHead, Node* newNode) {
 
 
   Node* temp = queueHead;
 
-  queueHead->next = NULL;
-
+  cout << queueHead;
   queueHead = queueHead->next;
+  cout << queueHead;
+  temp->next = NULL;
 
   return temp;
   
   // if the front is open 
-  if (front == NULL) {
+  /* if (front == NULL) {
     rear = NULL;
 
   }
+  */
+
+}
+
+
+void PRECEDENCE(char op) { // PEMDAS
+
+
+
+  if (op == "-" || op == "+") {
+
+    return 1; // least precedence, lowest on pemdas
+   
+  }
+  else if (op == "*" || op = "/") {
+
+    return 2; // more precedence, but less than power
+    
+  }
+  else if (op == "^") {
+
+    return 3; // highest precednece
+  }
+  else {
+    return 0; // we return 0 if the operator is not valid.
+
+  }
+
+
+
 
 
 }
 
 
 
+
+void SHUNTINGYARD(Node*& queueHead, char prefixFunction) {
+
+ 
+  cout << "Your PREFIXED function is" << prefixFunction << endl;
+  int functionLength = strlen(prefixFunction);
+
+  for (int i = 0; i < functionLength; i++) {
+    // so we can get an index value!
+  
+  
+
+  if (prefixFunction[i] != "+" && prefixFunction[i] != "-" && prefixFunction[i] != "(" && ")" && prefixFunction[i] !=  "/" && prefixFunction[i] !=  "^" && prefixFunction[i] != "*") {
+
+    ENQUEUE(queueHead, newNode);
+
+  }
+
+  if (prefixFunction[i] == // if there is an operator... 
+
+
+
+      }
+
+}
