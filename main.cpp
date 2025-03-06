@@ -11,13 +11,19 @@ struct Node {
   Node* rear;
 
 
-   newNode -> data = "C";
+  //   newNode -> data;
  
 };
+
+
 
 void PUSH(Node*& stackHead, Node* newNode);
 Node* POP(Node* stackHead);
 void PRINT(Node* stackHead);
+void ENQUEUE(Node* queueHead, Node* newNode);
+int PRECEDENCE(char op);
+void SHUNTINGYARD(Node*& queueHead, char prefixFunction[], Node* stackHead);
+
 
 int main() {
 
@@ -34,9 +40,9 @@ int main() {
   //POP(stackHead);
   //PRINT(stackHead);
 
-  char prefixFunctiin[50];
+  char prefixFunction[50];
 
-  cout << "enter an operator" << endl;
+  cout << "Enter a function" << endl;
   cin >> prefixFunction;
 
   //cout << "Precedence of + is: " << precedence(input);
@@ -129,9 +135,9 @@ void PEEK(Node* newNode) {
 
   Node* temp = newNode;
 
-  cout << temp -> data << endl;
+  cout << *temp -> data << endl;
 
-
+  
 
 
 
@@ -193,7 +199,7 @@ void DEQUEUE(Node*& queueHead, Node* newNode) {
 }
 
 
-void PRECEDENCE(char op) { // PEMDAS
+int PRECEDENCE(char op) { // PEMDAS
 
 
 
@@ -202,7 +208,7 @@ void PRECEDENCE(char op) { // PEMDAS
     return 1; // least precedence, lowest on pemdas
    
   }
-  else if (op == "*" || op = "/") {
+  else if (op == "*" || op == "/") {
 
     return 2; // more precedence, but less than power
     
@@ -225,7 +231,7 @@ void PRECEDENCE(char op) { // PEMDAS
 
 
 
-void SHUNTINGYARD(Node*& queueHead, char prefixFunction) {
+void SHUNTINGYARD(Node*& queueHead, char prefixFunction[], Node* stackHead) {
 
  
   cout << "Your PREFIXED function is" << prefixFunction << endl;
@@ -236,16 +242,53 @@ void SHUNTINGYARD(Node*& queueHead, char prefixFunction) {
   
   
 
-  if (prefixFunction[i] != "+" && prefixFunction[i] != "-" && prefixFunction[i] != "(" && ")" && prefixFunction[i] !=  "/" && prefixFunction[i] !=  "^" && prefixFunction[i] != "*") {
-
+    if (prefixFunction[i] != '+' && prefixFunction[i] != "-" && prefixFunction[i] != "(" && prefixFunction[i] != ")" && prefixFunction[i] !=  "/" && prefixFunction[i] != "^" && prefixFunction[i] != "*") {
+    Node* newNode = new Node (prefixFunction[i]);
+    
     ENQUEUE(queueHead, newNode);
 
   }
 
-  if (prefixFunction[i] == // if there is an operator... 
+  if (prefixFunction[i] == "+" || prefixFunction[i] == "-" || prefixFunction[i] ==  "/" || prefixFunction[i] ==  "^" || prefixFunction[i] == "*" || prefixFunction[i] == "-" || prefixFunction[i] ==  "/" || prefixFunction[i] =="^" || prefixFunction[i] == "*") {// if there is an operator... 
+    while (stackHead != NULL && PRECEDENCE(stackHead -> data) > PRECEDENCE(prefixFunction[i])) {
+	// checknig if the stack head has something, compare the PRECEDENCE (order of operations)
+
+	Node* popNode = POP(stackHead); // we can save it becasue this returns a NODE!!! pop operator onto the queue
+	ENQUEUE(queueHead, popNode);
 
 
 
       }
+      Node* newNode = new Node (prefixFunction[i]); // getting the operator sfrom the function the user read in
+      PUSH(stackHead, newNode);
 
+
+      }
+
+    if (prefixFunction[i] == "(") {
+      
+      Node* newNode = new Node(prefixFunction[i]); // to store paranthesis on stack to manage operators.
+      
+	PUSH(stackHead, newNode); // if paranthesis, push NODE ONTO THE OPERATOR STACK!
+
+	
+    }
+    else if (prefixFunction[i] == ")") {
+
+      while (stackHead != "(") {
+
+
+	
+	Node* temp = POP(stackHead); // save the paranthesis
+	ENQUEUE(queueHead, temp);
+
+
+      }
+
+
+      Node* tempNode = POP(stackHead);
+      delete tempNode;
+    }
+
+  }
 }
