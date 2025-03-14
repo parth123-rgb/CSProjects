@@ -66,7 +66,7 @@ cin >> chooseInput;
         
         cout << "Enter which number you wish to add to tree: " << endl;
         cin >> input;
-        INSERTION(currentNode, input);
+        currentNode = INSERTION(currentNode, input);
 
         if (input > 999 || input < 0) {
         cout << "Your number is too high or low! "<< endl;
