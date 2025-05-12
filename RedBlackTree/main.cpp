@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <cstring>
 #include <fstream>
@@ -26,7 +25,7 @@ struct Node {
 
 Node* INSERTION(Node* currentNode, int input, Node*& inserted);
 //bool SEARCH(Node* currentNode);
-bool searchFunction(Node * currentNode);
+Node* searchFunction(Node * currentNode);
 
 Node* SUCCESSOR(Node* currentNode);
 void leftRotation(Node*& root, Node*& x);
@@ -34,7 +33,7 @@ void rightRotation(Node*& root, Node*&current);
 //void insertionFIX(Node* currentNode) {
 
 Node* rootNode(Node* currentNode);
-Node* DELETION(Node* currentNode, int deleteNumber);
+Node* DELETION(Node*& root, Node*& currentNode);
 void PRINT(Node* currentNode, int depth); // position is where currently am, depth is checking to see how far down the search tree to place something, size is the next open slot
 
 void insertionFIX(Node*& currentNode, Node *& root);
@@ -70,7 +69,7 @@ int main() {
     cout << "If you wish to SEARCH for a node, type 'SEARCH'" << endl;
     cout << "If you wish to PRINT, type 'PRINT'" << endl;
     cout << "If you wish to delete a node, type 'DELETE'" << endl;
-    cout << "If you wish to QUIT the system, type 'QUIT'" << endl;
+    cout << "If you wish to quit the system, type 'QUIT'" << endl;
 
 cin >> chooseInput;
   
@@ -85,7 +84,8 @@ cin >> chooseInput;
         cout << "Enter which number you wish to add to the tree: " << endl;
         
                 cin >> input;
-		
+
+        //if (input < 0 || input > 999) {
         Node* inserted = NULL;
         root = INSERTION(root, input, inserted); 
         insertionFIX(inserted, root);          
@@ -125,7 +125,7 @@ cin >> chooseInput;
     // for (int i = 0; i > fileAmount; i++) {
      Node* inserted = NULL;
         root = INSERTION(root, input, inserted);
-      insertionFIX(inserted, root);
+     insertionFIX(inserted, root);
    //  }
             
         }
@@ -134,40 +134,30 @@ cin >> chooseInput;
     
       else if (strcmp(chooseInput, "SEARCH")==0) {
           
-      if (searchFunction(root)) {
-          cout << "This number is in the tree!" << endl;
-      } 
-      else {
-	      cout << "this number is NOT in the tree!" << endl;
-          
-      }
-      }
-      
-
+     currentNode = searchFunction(root);
+	}
     else if (strcmp(chooseInput, "PRINT")==0) {
         
         PRINT(root, 0);
-    }/*
+    }
     else if (strcmp(chooseInput, "DELETE")==0) {
     
  //   cout << "If you want to delete the ROOT, type 'ROOT
-    cout << "Enter what number you want to delete: " << endl;
-    cin >> deleteNumber;
+  
     
-    currentNode = DELETION(currentNode, deleteNumber);
+   currentNode = DELETION(root, currentNode);
     
    // setting currnet node to the return value!
     }
+    else if (strcmp(chooseInput, "QUIT")==0) {
+        exit(0);
+    }
     
-*/    
- 
-	else if (strcmp(chooseInput, "QUIT")==0) {
-	exit(0);
-	}
-    
+ }
     
     
-      }
+    
+    
     
     return 0;
 }
@@ -185,9 +175,9 @@ if (currentNode == NULL) {
 }
 
 if (input < currentNode->data) {
-    Node* leftNode = INSERTION(currentNode->left, input, inserted);
-    currentNode->left = leftNode;
-    leftNode->parent = currentNode; // normal binarysearch treei nsertion. we call insertion fix at the TOP in main, so we can ensure all red black tree properties are met.
+    Node* leftChild = INSERTION(currentNode->left, input, inserted);
+    currentNode->left = leftChild;
+    leftChild->parent = currentNode;
 } 
 
 
@@ -261,6 +251,7 @@ return currentNode;
 
     }
 
+  
       if (currentNode != NULL) {      
       currentNode->color = 'b';
         //continue;
@@ -377,7 +368,7 @@ void rightRotation(Node*& currentNode) {
 void rightRotation(Node*& currentNode) {
   // essentially opposite of left rotation function
 
-  // move y's right chld to currentnode's left.
+  // move y's right chld to currentNode's left.
   
   Node* y = currentNode->left; // setting y to be the LEFt child
   Node* root = rootNode(currentNode);
@@ -431,13 +422,13 @@ void rightRotation(Node*& currentNode) {
 
 
 
-void insertionFIX(Node*& current, Node*& root) {
+void insertionFIX(Node*& currentNode, Node*& root) {
     // get the root so we can recolor it black at the end
 
     // as long as we're not at root and parent is red, we have a violation
-    while (current != root && current->parent->color == 'r') {
-        Node* parent = current->parent;
-        Node* grandparent = current->parent->parent;
+    while (currentNode != root && currentNode->parent->color == 'r') {
+        Node* parent = currentNode->parent;
+        Node* grandparent = currentNode->parent->parent;
         Node* uncle = NULL;
         // figure out which side parent is on, and set uncle accordingly
        if (parent == grandparent->left) {
@@ -456,28 +447,28 @@ void insertionFIX(Node*& current, Node*& root) {
             parent->color= 'b';
             uncle->color= 'b';
             grandparent->color = 'r';
-            current = grandparent;
+            currentNode = grandparent;
         }
         else {
             // this is if the current node is in the "inner oaprt". we shoudl change this so the next case can work
-            if (parent == grandparent->left && current == parent->right) {
+            if (parent == grandparent->left && currentNode == parent->right) {
                 // preform left rotation on parent
                 cout << "case 2" << endl;
-                current = parent;
+                currentNode = parent;
                 cout << "left rotation" << endl;
                 leftRotation(root, parent); // rotating root and parent
-                parent = current->parent; // traversing.
+                parent = currentNode->parent; // traversing.
                 cout << parent->data << endl;
                 grandparent = parent->parent;
                 cout << grandparent->data << endl; // debugginmg gfor now , will delete
                 cout << root->data << endl;
             }
-            else if (parent == grandparent->right && current == parent->left) {
+            else if (parent == grandparent->right && currentNode == parent->left) {
                 // preform right rotation on parent
-                 //= parent;
+                 currentNode = parent;
                 cout << "right rotation" << endl;
                 rightRotation(root, parent);
-                parent = current->parent;
+                parent = currentNode->parent;
                 grandparent = parent->parent;
             }
             
@@ -496,7 +487,8 @@ void insertionFIX(Node*& current, Node*& root) {
             cout << root->data << endl;
         }
         
-        root = rootNode(current); // we must change the root if the rotatiosn are moving it
+        root = rootNode(currentNode); // we must change the root if the rotatiosn are moving it
+        cout << "currentNodeS VALUE AFTER INSERTIONFIX" << currentNode->data << endl;
     }
 // root should always be black regardless of situation    
     root->color = 'b';
@@ -529,7 +521,7 @@ if (currentNode->left !=NULL) {
 }
 
 
-bool searchFunction(Node* currentNode) {
+Node* searchFunction(Node* currentNode) {
     
     int searchNumber;
     
@@ -538,8 +530,11 @@ bool searchFunction(Node* currentNode) {
     
     while (currentNode != NULL) {
         
-        if (searchNumber == currentNode->data) { // if the inputted number is equal to the currentnode's data
-            return true; // return here otherwise will be infite loop
+        if (searchNumber == currentNode->data) { // if the inputted number is equal to the currentNode's data
+            cout << "This number is in the tree!" << endl;
+            return currentNode;
+           // return true; // return here otherwise will be infite loop
+            
         }
         else if (searchNumber > currentNode->data) {
             currentNode = currentNode->right;
@@ -552,5 +547,155 @@ bool searchFunction(Node* currentNode) {
 
     }
 // if it reaches the end, past everything, it means that there is NO matching number!
-    return false;
+cout << "currentnode data in search: " << currentNode->data << endl;
+    cout << "This number is not in the tree" << endl;
+    //return NULL;
+}
+
+
+
+Node* DELETION(Node*& root, Node*& currentNode) {
+    if (root == NULL) {
+        cout << "currentNode value: " << currentNode << endl;
+        return NULL;
+    }
+    else {
+        
+    int deleteNumber;
+    cout << "Please enter the number you wish to delete: " << endl;
+    cin >> deleteNumber;
+    
+    
+    Node* temp = root;
+    
+    
+    while (temp != NULL) {
+    if (temp->data > deleteNumber) {
+        temp = temp->left;
+    }
+    
+    else if (temp->data < deleteNumber) {
+        temp = temp->right;
+    }
+    
+    //if (searchFunction == true)
+   // while (currentNode != NULL) {
+    else {
+      
+    if (temp->right == NULL && temp->left == NULL) {
+    if (temp->parent == NULL) {
+       temp = NULL;
+    } else {
+    
+    if (temp->parent->right == temp) {
+        temp->parent->right = NULL;
+    }
+    else if (temp->parent->left == temp) {
+        temp->parent->left = NULL;
+    }
+    cout << "We are deleting: " << temp->data << endl;
+    delete temp;
+     //   delete currentNode;
+        // return currentNode;
+         //return root;
+    //  }  
+      }
+      
+    
+     //          return root;
+
+   
+    
+    }
+  
+     else if (temp->right != NULL && temp->left == NULL) { // if there is a right child BUT not a left CHILD (1 child)
+        //Node* x = temp->right; // setting the right child of the currentNode equal to X.
+       
+        if (temp->parent != NULL) {
+        
+        cout << "Temporary data: " << temp->data << endl;
+        Node* nodeToDelete = temp;
+        
+        //delete grandparent->right; 
+        if (temp->parent->left == temp) { // if current node is the left child
+            temp->parent->left = temp->left;
+        } 
+        else if (temp->parent->right == temp) { // if current node is the right child
+        temp->parent->right = temp->right;
+        }
+        
+        temp->right->parent = temp->parent;
+       // temp->left->parent = temp->parent;
+     //   temp
+
+        delete temp;
+        }
+        
+
+                }
+                
+                
+                   else if (temp->right != NULL && temp->left == NULL) { // if there is a right child BUT not a left CHILD (1 child)
+        //Node* x = temp->right; // setting the right child of the currentNode equal to X.
+       
+        if (temp->parent != NULL) {
+        
+        cout << "Temporary data: " << temp->data << endl;
+        Node* nodeToDelete = temp;
+        
+        //delete grandparent->right; 
+        if (temp->parent->left == temp) { // if current node is the left child
+            temp->parent->left = temp->left;
+        } 
+        else if (temp->parent->right == temp) { // if current node is the right child
+        temp->parent->right = temp->right;
+        }
+        
+       // temp->right->parent = temp->parent;
+        temp->left->parent = temp->parent;
+     //   temp
+
+        delete temp;
+        }
+        // if it is a left child        
+    else if (temp->right == NULL && temp->left != NULL) {
+        
+        Node* nodeToDelete = temp;
+        
+        if (temp->parent->left == temp) {
+            temp->parent->left = temp->left;
+        }
+        else if (temp->parent->right == temp) {
+            temp->parent->right = temp->right;
+        }
+        
+        temp->parent->left = temp->parent;
+        //temp->parent->right = temp->parent;
+        delete temp;
+        }
+           else if (temp->right == NULL && temp->left != NULL) {
+        
+        Node* nodeToDelete = temp;
+        
+        if (temp->parent->left == temp) {
+            temp->parent->left = temp->left;
+        }
+        else if (temp->parent->right == temp) {
+            temp->parent->right = temp->right;
+        }
+        
+       // temp->parent->left = temp->parent;
+        temp->parent->right = temp->parent;
+        delete temp;
+        }
+                return root;
+
+            }
+            }
+        }
+        
+    }
+    
+    
+    
 }
