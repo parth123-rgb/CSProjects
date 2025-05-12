@@ -70,6 +70,7 @@ int main() {
     cout << "If you wish to SEARCH for a node, type 'SEARCH'" << endl;
     cout << "If you wish to PRINT, type 'PRINT'" << endl;
     cout << "If you wish to delete a node, type 'DELETE'" << endl;
+    court << "If you wish to QUIT the system, type 'QUIT'" << endl;
 
 cin >> chooseInput;
   
@@ -158,6 +159,9 @@ cin >> chooseInput;
     
 */    
  }
+	else if (strcmp(chooseInput, "QUIT")==0) {
+	exit(0);
+	}
     
     
     
@@ -470,7 +474,7 @@ void insertionFIX(Node*& current, Node*& root) {
                 // preform right rotation on parent
                  //= parent;
                 cout << "right rotation" << endl;
-                rightRotation(root, grandparent);
+                rightRotation(root, parent);
                 parent = current->parent;
                 grandparent = parent->parent;
             }
