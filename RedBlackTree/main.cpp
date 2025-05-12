@@ -136,9 +136,11 @@ cin >> chooseInput;
           
       if (searchFunction(root)) {
           cout << "This number is in the tree!" << endl;
-      } else {
+      } 
+      else {
 	      cout << "this number is NOT in the tree!" << endl;
           
+      }
       }
       
 
@@ -158,14 +160,14 @@ cin >> chooseInput;
     }
     
 */    
- }
+ 
 	else if (strcmp(chooseInput, "QUIT")==0) {
 	exit(0);
 	}
     
     
     
-    
+      }
     
     return 0;
 }
