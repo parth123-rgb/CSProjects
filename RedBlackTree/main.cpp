@@ -70,7 +70,7 @@ int main() {
     cout << "If you wish to SEARCH for a node, type 'SEARCH'" << endl;
     cout << "If you wish to PRINT, type 'PRINT'" << endl;
     cout << "If you wish to delete a node, type 'DELETE'" << endl;
-    court << "If you wish to QUIT the system, type 'QUIT'" << endl;
+    cout << "If you wish to QUIT the system, type 'QUIT'" << endl;
 
 cin >> chooseInput;
   
@@ -136,12 +136,12 @@ cin >> chooseInput;
           
       if (searchFunction(root)) {
           cout << "This number is in the tree!" << endl;
+      } else {
+	      cout << "this number is NOT in the tree!" << endl;
           
       }
-      else {
-          cout << "This number iS NOT in the tree! " << endl;
-      }
-	}
+      
+
     else if (strcmp(chooseInput, "PRINT")==0) {
         
         PRINT(root, 0);
