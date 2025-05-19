@@ -146,7 +146,7 @@ cin >> chooseInput;
   
     
    currentNode = DELETION(root, currentNode);
-    
+//insertionFIX(root, currentNode);
    // setting currnet node to the return value!
     }
     else if (strcmp(chooseInput, "QUIT")==0) {
@@ -554,7 +554,7 @@ cout << "currentnode data in search: " << currentNode->data << endl;
 
 
 
-Node* DELETION(Node*& root, Node*& currentNode) {
+Node* DELETION(Node*& root, Node*& currentNode){
     if (root == NULL) {
         cout << "currentNode value: " << currentNode << endl;
         return NULL;
@@ -583,6 +583,7 @@ Node* DELETION(Node*& root, Node*& currentNode) {
     else {
       
     if (temp->right == NULL && temp->left == NULL) {
+        // deletion if the currentNode has NO Children.
     if (temp->parent == NULL) {
        temp = NULL;
     } else {
@@ -595,107 +596,109 @@ Node* DELETION(Node*& root, Node*& currentNode) {
     }
     cout << "We are deleting: " << temp->data << endl;
     delete temp;
-     //   delete currentNode;
-        // return currentNode;
-         //return root;
+
     //  }  
       }
       
     
-     //          return root;
 
    
     
     }
-  
-     else if (temp->right != NULL && temp->left == NULL) { // if there is a right child BUT not a left CHILD (1 child)
-        //Node* x = temp->right; // setting the right child of the currentNode equal to X.
-       
-        if (temp->parent != NULL) {
-        
-        cout << "Temporary data: " << temp->data << endl;
-        Node* nodeToDelete = temp;
-        
-        //delete grandparent->right; 
-        if (temp->parent->left == temp) { // if current node is the left child
-            temp->parent->left = temp->left;
-        } 
-        else if (temp->parent->right == temp) { // if current node is the right child
-        temp->parent->right = temp->right;
-        }
-        
-        temp->right->parent = temp->parent;
-       // temp->left->parent = temp->parent;
-     //   temp
-
-        delete temp;
-        }
-        
-
-                }
                 
                 
-                   else if (temp->right != NULL && temp->left == NULL) { // if there is a right child BUT not a left CHILD (1 child)
+        else if (temp->right != NULL && temp->left == NULL) { // if there is a right child BUT not a left CHILD (1 child)
         //Node* x = temp->right; // setting the right child of the currentNode equal to X.
        
-        if (temp->parent != NULL) {
+        if (temp->parent->right != NULL) {
         
-        cout << "Temporary data: " << temp->data << endl;
+      //  cout << "Temporary data: " << temp->data << endl;
         Node* nodeToDelete = temp;
         
-        //delete grandparent->right; 
-        if (temp->parent->left == temp) { // if current node is the left child
-            temp->parent->left = temp->left;
-        } 
-        else if (temp->parent->right == temp) { // if current node is the right child
-        temp->parent->right = temp->right;
-        }
         
-       // temp->right->parent = temp->parent;
-        temp->left->parent = temp->parent;
-     //   temp
+        
+    
+    if (temp->color == 'b' && temp->right != NULL && temp->right->color == 'r') {
+        temp->right->color = 'b';
+    }
 
+        //delete grandparent->right; 
+       /* if (temp->parent->left == temp) { // if current node is the left child
+            temp->parent->left = temp->left;
+       */
+       if (temp->parent->right == temp) {
+        temp->parent->right = temp->right;
+        //temp->right->data = 'b';
+       }
+       
+       else{
+           temp->parent->left = temp->right;
+            //temp->right->data = 'b';
+           
+       }
+       // temp->left->right = temp->parent;
+     //   temp
+   //  insertionFIX(temp, currentNode);
+   
+        cout << "Deleting: " << temp->data << endl;
         delete temp;
         }
         // if it is a left child        
-    else if (temp->right == NULL && temp->left != NULL) {
-        
-        Node* nodeToDelete = temp;
-        
-        if (temp->parent->left == temp) {
-            temp->parent->left = temp->left;
-        }
-        else if (temp->parent->right == temp) {
-            temp->parent->right = temp->right;
-        }
-        
-        temp->parent->left = temp->parent;
-        //temp->parent->right = temp->parent;
-        delete temp;
-        }
-           else if (temp->right == NULL && temp->left != NULL) {
-        
-        Node* nodeToDelete = temp;
-        
-        if (temp->parent->left == temp) {
-            temp->parent->left = temp->left;
-        }
-        else if (temp->parent->right == temp) {
-            temp->parent->right = temp->right;
-        }
-        
-       // temp->parent->left = temp->parent;
-        temp->parent->right = temp->parent;
-        delete temp;
-        }
-                return root;
+   
 
             }
-            }
-        }
+            
+    else if (temp->right == NULL && temp->left != NULL) { // if there is a right child BUT not a left CHILD (1 child)
+        //Node* x = temp->right; // setting the right child of the currentNode equal to X.
+       
+        if (temp->parent != NULL) {
         
+      //  cout << "Temporary data: " << temp->data << endl;
+        Node* nodeToDelete = temp;
+        
+        //delete grandparent->right; 
+      //  if (temp->parent->right == temp) { // if current node is the left child
+         //   temp->parent->right = temp->right;
+       // } 
+      //  else { // if current node is the right child
+       // temp->left->parent = temp->parent->left;
+        //temp->parent->right = temp->parent;
+  
+    
+     if (temp->color == 'b' && temp->left != NULL && temp->left->color == 'r') {
+        temp->left->color = 'b';
     }
     
+    
+    if (temp->parent->right == temp) { // checking if child data is left or right child
+        temp->parent->right = temp->left;
+    }
+    else {
+        temp->parent->left = temp->left;
+    }
+       // temp->right->parent = temp->parent;
+       //if (temp->parent != NULL) {
+   // insertionFIX(temp, currentNode);
+               cout << "Deleting: " << temp->data << endl;
+    
+                delete temp;
+
+    }//}
+     //   temp
+
+
+               }
+        // if it is a left child        
+
+         return root;
+
+            }
+
+
+            //        }
+    }   
+    }
+
     
     
 }
