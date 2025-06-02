@@ -32,7 +32,6 @@ Node* SEARCH(Node* currentNode, int searchNum);
 void deletionCHECK(Node*& root, Node* current, Node*& sibling, Node*& insideNephew, Node*& outsideNephew, Node*& parent);
 void DELETION(Node*& root, Node* current_search_start_node, int deleteNumber);
 
-// prototypes for cases
 void caseTwo(Node*& root, Node* current, Node*& sibling, Node*& insideNephew, Node*& outsideNephew, Node*& parent);
 bool caseThree(Node*& root, Node* current, Node*& sibling, Node*& insideNephew, Node*& outsideNephew, Node*& parent);
 void caseFour(Node*& root, Node* current, Node*& sibling, Node*& insideNephew, Node*& outsideNephew, Node*& parent);
@@ -923,8 +922,9 @@ void deletionCHECK(Node*& root, Node* current, Node*& sibling, Node*& insideNeph
                 current = parent; // Move problem up
             
             // if (root == NULL)
-                if (current == root || current == NULL) return; 
-               
+                if (current == root || current == NULL) { 
+                    return; 
+                }
                // break;
                 continue;
             }
