@@ -2,168 +2,124 @@
 #include <cstring>
 #include <fstream>
 
-
 using namespace std;
 
-
 struct Node {
-
-  int data;
-  Node* left;
-  Node* right;
-  Node* parent;
-  char color;
-  Node* next;
-
-
-
-
+    int data;
+    Node* left;
+    Node* right;
+    Node* parent;
+    char color;
+    Node* next;
 };
-
-
-
+// function prototypes!!!!!
 
 Node* INSERTION(Node* currentNode, int input, Node*& inserted);
-//bool SEARCH(Node* currentNode);
-Node* searchFunction(Node * currentNode);
+Node* searchFunction(Node* currentNode);
+Node* SUCCESSOR(Node* node);
 
-Node* SUCCESSOR(Node* currentNode);
+
 void leftRotation(Node*& root, Node*& x);
-void rightRotation(Node*& root, Node*&current);
-//void insertionFIX(Node* currentNode) {
+void rightRotation(Node*& root, Node*& current);
+
 
 Node* rootNode(Node* currentNode);
-Node* DELETION(Node*& root, Node*& currentNode);
-void PRINT(Node* currentNode, int depth); // position is where currently am, depth is checking to see how far down the search tree to place something, size is the next open slot
+void PRINT(Node* currentNode, int depth);
+void insertionFIX(Node*& currentNode, Node*& root);
+Node* SEARCH(Node* currentNode, int searchNum);
 
-void insertionFIX(Node*& currentNode, Node *& root);
 
+void deletionCHECK(Node*& root, Node* current, Node*& sibling, Node*& insideNephew, Node*& outsideNephew, Node*& parent);
+void DELETION(Node*& root, Node* current_search_start_node, int deleteNumber);
+
+// prototypes for cases
+void caseTwo(Node*& root, Node* current, Node*& sibling, Node*& insideNephew, Node*& outsideNephew, Node*& parent);
+bool caseThree(Node*& root, Node* current, Node*& sibling, Node*& insideNephew, Node*& outsideNephew, Node*& parent);
+void caseFour(Node*& root, Node* current, Node*& sibling, Node*& insideNephew, Node*& outsideNephew, Node*& parent);
+void caseFive(Node*& root, Node* current, Node*& sibling, Node*& insideNephew, Node*& outsideNephew, Node*& parent);
+void caseSix(Node*& root, Node* current, Node*& sibling, Node*& insideNephew, Node*& outsideNephew, Node*& parent);
+Node* assignValues(Node*& current, Node*& sibling, Node*& insideNephew, Node*& outsideNephew, Node*& parent); // Parameter 'Sibling' changed to 'sibling', 'parent' to 'parent'
 
 int main() {
-  
     char chooseInput[50];
-    int numberOfInput;
     int input;
-   // int rootNode;
     bool stillGoing = true;
-    int deleteNumber;
-    char rootOrNumber[50];
     int fileAmount;
-    //char fileInput[50];
 
-
-
-
-    Node* right = NULL;
-    Node* parent = NULL;
     Node* root = NULL;
-    Node* left = NULL;
-    Node* currentNode = NULL; // SET THE NULL SO WE DONT SEE 0
-    Node* leftRotation = NULL;
+    Node* tempCurrentNode = NULL; // literallyl just for callingfunctions
 
-    
     while (stillGoing) {
+        cout << "If you wish to add numbers yourself, type 'ADD'" << endl;
+        cout << "If you wish to add numbers from a file, type 'FILE'" << endl;
+        cout << "If you wish to SEARCH for a node, type 'SEARCH'" << endl;
+        cout << "If you wish to PRINT, type 'PRINT'" << endl;
+        cout << "If you wish to delete a node, type 'DELETE'" << endl;
+        cout << "If you wish to quit the system, type 'QUIT'" << endl;
+
+        cin >> chooseInput;
+
+        if (strcmp(chooseInput, "ADD") == 0) {
+            cout << "Enter which number you wish to add to the tree: " << endl;
+            cin >> input;
+           
+           
+            Node* inserted = NULL;
+            root = INSERTION(root, input, inserted);
+            if (inserted != NULL) {
+                insertionFIX(inserted, root);
+            }
+           
+            PRINT(root, 0);
+        } 
         
-    cout << "If you wish to add numbers manually, type  'ADD'" <<endl;
-    cout << "If you wish to add numbers from a file, type  'FILE'"<<endl;
-    cout << "If you wish to SEARCH for a node, type 'SEARCH'" << endl;
-    cout << "If you wish to PRINT, type 'PRINT'" << endl;
-    cout << "If you wish to delete a node, type 'DELETE'" << endl;
-    cout << "If you wish to quit the system, type 'QUIT'" << endl;
+        else if (strcmp(chooseInput, "FILE") == 0) {
+            cout << "Enter the amount of numbers to read in from file: " << endl;
+            cin >> fileAmount;
+          // reading input from file
 
-cin >> chooseInput;
-  
-  
-  if (strcmp(chooseInput, "ADD")==0) {
-    //cout << "Enter the amount of numbers you wish to insert: " << endl;
-    //cin >> numberOfInput;
-    
-    
-    
-   // for (int i = 1; i <= numberOfInput; i++) {
-        cout << "Enter which number you wish to add to the tree: " << endl;
-        
-                cin >> input;
-
-        //if (input < 0 || input > 999) {
-        Node* inserted = NULL;
-        root = INSERTION(root, input, inserted); 
-        insertionFIX(inserted, root);          
-        PRINT(root, 0);
-    // inserting here.
-     //   }
-        //}
-}
-  
-  else if (strcmp(chooseInput, "FILE")==0) {
-  
-        int randomNumber;
-        cout << "Enter the amount of numbers to read in from file: " << endl;
-        cin >> fileAmount;
-        ifstream fin("numbers.txt");
-
-
-        for (int i = 0; i <= fileAmount; i++) {
-        
-        fin >> input;
-    //    for (int i = 0; i <= fileAmount; i++) {
-  
-      //  for (int i = 0; i < randomNumber; i++) {            
-//                      input = randomNumber;
-    
-
-           /// fin;
-           // input = randomNumber;
-
-           //   }
-              
-        // input = randomNumber;
-            cout << "Read in: " << input << endl;
-        
-      
-      //  currentNode = INSERTION(currentNode, input, root);
-    // for (int i = 0; i > fileAmount; i++) {
-     Node* inserted = NULL;
-        root = INSERTION(root, input, inserted);
-     insertionFIX(inserted, root);
-   //  }
+            ifstream fin("numbers.txt");
             
-        }
-        fin.close();
-  }
-    
-      else if (strcmp(chooseInput, "SEARCH")==0) {
-          
-     currentNode = searchFunction(root);
-	}
-    else if (strcmp(chooseInput, "PRINT")==0) {
+
+            for (int i = 0; i < fileAmount; i++) {
+                fin >> input;
+                // reading each time the user had asked for
+                cout << "Read in: " << input << endl;
+                
+                Node* inserted = NULL;
+                root = INSERTION(root, input, inserted);
+               
+                if (inserted != NULL) {
+                    insertionFIX(inserted, root);
+                    // calling insertionFIX as long as inserted node exists
+                }
+            }
+            fin.close();
+            PRINT(root, 0); // Print after all file insertions
+        } 
+        else if (strcmp(chooseInput, "SEARCH") == 0) {
+            tempCurrentNode = searchFunction(root); // Result can be used if needed
+        } 
         
-        PRINT(root, 0);
+        else if (strcmp(chooseInput, "PRINT") == 0) {
+            PRINT(root, 0);
+        } 
+        
+        else if (strcmp(chooseInput, "DELETE") == 0) {
+            int deleteNumber;
+            cout << "Enter the number you wish to delete: " << endl;
+            cin >> deleteNumber;
+           
+            DELETION(root, root, deleteNumber);
+            PRINT(root, 0);
+        } 
+        
+        else if (strcmp(chooseInput, "QUIT") == 0) {
+            stillGoing = false;
+        } 
     }
-    else if (strcmp(chooseInput, "DELETE")==0) {
-    
- //   cout << "If you want to delete the ROOT, type 'ROOT
-  
-    
-   currentNode = DELETION(root, currentNode);
-//insertionFIX(root, currentNode);
-   // setting currnet node to the return value!
     }
-    else if (strcmp(chooseInput, "QUIT")==0) {
-        exit(0);
-    }
-    
- }
-    
-    
-    
-    
-    
-    return 0;
-}
-
-
-
+// insertion function, following noraml BST algorithim
 Node* INSERTION(Node* currentNode, int input, Node*& inserted) {
     
 
@@ -236,8 +192,12 @@ return currentNode;
 
 
 
-  Node* rootNode(Node* currentNode) {
-
+  Node* rootNode(Node* currentNode) { // Thsi will get usr oot node for isneritonFIx
+    
+    if (currentNode == NULL) {
+        return NULL; //  DNE
+    }
+    else {
 
 
    
@@ -250,28 +210,26 @@ return currentNode;
       currentNode = currentNode->parent;
 
     }
-
-  
-      if (currentNode != NULL) {      
-      currentNode->color = 'b';
-        //continue;
-    //  return currentNode;
-          
-      }
-
     }
+  
+     
     return currentNode; // when it reaches the end ofthe node, it will be the root node!
     
 
-
+}
   }
 
-
-
-
-
+// rotations (left and right ) are crucial for insertion/deletion fix, as we wil need to 
+// rotate accordingly
 
 void leftRotation(Node*& root, Node*& x) {
+    
+    if (x == NULL || x->right == NULL) {
+        
+        return; // Does not exiszt
+    }
+    
+    
     Node* y = x->right; // we are doing this for organization and modularity
     x ->right = y->left;
     
@@ -300,7 +258,12 @@ void leftRotation(Node*& root, Node*& x) {
 }
 
 
+
 void rightRotation(Node*& root, Node*& y) {
+    
+    if (y == NULL || y->left == NULL) {
+        return;
+    }
 // rotations are essential for keepign balanced red black trees, and allowing insertionFIX to wokr correcrtlytcorrectly.   
     Node* x = y->left;
     y->left = x->right;
@@ -329,95 +292,6 @@ void rightRotation(Node*& root, Node*& y) {
     x->right = y;
     y->parent = x;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-void rightRotation(Node*& currentNode) {
-    Node* y = currentNode->left;
-    Node* root = rootNode(currentNode);  // Get the root node for reference
-
-    currentNode->left = y->right;
-    if (y->left != NULL) {
-        y->left->parent = currentNode;
-    }
-    y->parent = currentNode->parent;
-    if (currentNode->parent == NULL) {
-        currentNode = y;  // If currentNode was the root, update it
-    } else if (currentNode == currentNode->parent->left) {
-        currentNode->parent->left = y;
-    } else {
-        currentNode->parent->right = y;
-    }
-    y->left = currentNode;
-    currentNode->parent = y;
-}
-
-
-
-void rightRotation(Node*& currentNode) {
-  // essentially opposite of left rotation function
-
-  // move y's right chld to currentNode's left.
-  
-  Node* y = currentNode->left; // setting y to be the LEFt child
-  Node* root = rootNode(currentNode);
-  
-  currentNode->left = y->right;
-
-  if (y->right != NULL) { // if y has a right child
-
-    y->parent->left = currentNode;
-
-
-
-  }
-  // moving y up
-
-  y->parent = currentNode->parent;
-
-  if (currentNode == root) {
-
-    root = y;
-
-  }
-
-  else if (currentNode == currentNode->parent->right) {
-
-    currentNode->parent->right = y;
-
-  }
-
-  else if (currentNode == currentNode->parent->left) {
-
-
-    currentNode->parent->left = y;
-
-  }
-
-
-  // mamkign current node the right child of y
-
-  y->left = currentNode;
-  currentNode->parent=y;
-
-
-
-
-}
-*/
-
-
 
 
 
@@ -479,8 +353,7 @@ void insertionFIX(Node*& currentNode, Node*& root) {
             if (parent == grandparent->left) { // updating grnadparents left.
                 cout << "right rotation" << endl;
                  rightRotation(root, grandparent); // preforming right rotation.
-            } else {
-                
+            }  else {
                 cout << "left rotation" << endl;
                 leftRotation(root, grandparent); // preforming left rotation.
             }
@@ -496,209 +369,608 @@ void insertionFIX(Node*& currentNode, Node*& root) {
 
 
 
-
-
-
-
-   
-void PRINT(Node* currentNode, int depth) { 
+void PRINT(Node* currentNode, int depth) { // copied from BST code
     if (currentNode == NULL) {
-        return;   // make sure the currentNode is not open
+        return;
     }
-
-if (currentNode -> right != NULL) {
-    PRINT(currentNode->right, depth + 1); // if its not open, then recursivley print the right side of the tree
-}
-
-    for (int i = 0; i < depth; i++) { // add tabs for each depth!
-        cout << "\t";  
+    if (currentNode->right != NULL) {
+        PRINT(currentNode->right, depth + 1);
     }
-    cout << currentNode->data << "(" << currentNode->color << ")" << endl; // print out data when going through the right side
-if (currentNode->left !=NULL) {
-    PRINT(currentNode->left, depth + 1);// do same wuth left side
-}
-    
+    for (int i = 0; i < depth; i++) {
+        cout << "\t";
+    }
+    cout << currentNode->data << "(" << currentNode->color << ")";
+
+    cout << endl;
+    if (currentNode->left != NULL) {
+        PRINT(currentNode->left, depth + 1);
+    }
 }
 
 
-Node* searchFunction(Node* currentNode) {
-    
+
+Node* searchFunction(Node* root) {
     int searchNumber;
-    
-    cout << "Enter which number you would like to search: " << endl;
-    cin >> searchNumber;
-    
-    while (currentNode != NULL) {
-        
-        if (searchNumber == currentNode->data) { // if the inputted number is equal to the currentNode's data
-            cout << "This number is in the tree!" << endl;
-            return currentNode;
-           // return true; // return here otherwise will be infite loop
-            
-        }
-        else if (searchNumber > currentNode->data) {
-            currentNode = currentNode->right;
-            // traverse throughout the tree, this works with the while loop, because it will keep running
-        }
-        else if (searchNumber < currentNode->data) {
-            currentNode = currentNode->left; // trabverse through the left side of the tree
-            // we know to go left or right, because of the properties of binary trees 
-        }
-
-    }
-// if it reaches the end, past everything, it means that there is NO matching number!
-cout << "currentnode data in search: " << currentNode->data << endl;
-    cout << "This number is not in the tree" << endl;
-    //return NULL;
-}
-
-
-
-Node* DELETION(Node*& root, Node*& currentNode){
     if (root == NULL) {
-        cout << "currentNode value: " << currentNode << endl;
         return NULL;
     }
-    else {
+    cout << "Enter which number you would like to search: " << endl;
+    cin >> searchNumber;
+     
+
+    Node* searchNode = SEARCH(root, searchNumber);
+    // to get the node value which was returned from the next function
+
+    if (searchNode == NULL) {
         
-    int deleteNumber;
-    cout << "Please enter the number you wish to delete: " << endl;
-    cin >> deleteNumber;
+        cout << searchNumber << " is NOT in the RBT!!!" << endl;
+        
+    } // if the searchNode ends up being NULL (bc we reutrn null), then it is not in the RBNT
     
+    else if (searchNode != NULL) {
     
-    Node* temp = root;
+    cout << searchNumber << "IS in the red black tree" << endl;
+
+    } // if there IS A value found, then it will have been returned, adn it is in the RBT
     
+    return searchNode;
+}
+
+
+
+Node* SEARCH(Node* currentNode, int searchNum) {
+    Node* current = currentNode;
     
-    while (temp != NULL) {
-    if (temp->data > deleteNumber) {
-        temp = temp->left;
-    }
-    
-    else if (temp->data < deleteNumber) {
-        temp = temp->right;
-    }
-    
-    //if (searchFunction == true)
-   // while (currentNode != NULL) {
-    else {
+    while (current != NULL) {
+        if (searchNum == current->data) { // then node is FOUND
+            return current;
       
-    if (temp->right == NULL && temp->left == NULL) {
-        // deletion if the currentNode has NO Children.
-    if (temp->parent == NULL) {
-       temp = NULL;
-    } else {
-    
-    if (temp->parent->right == temp) {
-        temp->parent->right = NULL;
-    }
-    else if (temp->parent->left == temp) {
-        temp->parent->left = NULL;
-    }
-    cout << "We are deleting: " << temp->data << endl;
-    delete temp;
-
-    //  }  
-      }
-      
-    
-
-   
-    
-    }
-                
-                
-        else if (temp->right != NULL && temp->left == NULL) { // if there is a right child BUT not a left CHILD (1 child)
-        //Node* x = temp->right; // setting the right child of the currentNode equal to X.
-       
-        if (temp->parent->right != NULL) {
+        } 
         
-      //  cout << "Temporary data: " << temp->data << endl;
-        Node* nodeToDelete = temp;
-        
-        
-        
-    
-    if (temp->color == 'b' && temp->right != NULL && temp->right->color == 'r') {
-        temp->right->color = 'b';
-    }
-
-        //delete grandparent->right; 
-       /* if (temp->parent->left == temp) { // if current node is the left child
-            temp->parent->left = temp->left;
-       */
-       if (temp->parent->right == temp) {
-        temp->parent->right = temp->right;
-        //temp->right->data = 'b';
-       }
-       
-       else{
-           temp->parent->left = temp->right;
-            //temp->right->data = 'b';
-           
-       }
-       // temp->left->right = temp->parent;
-     //   temp
-   //  insertionFIX(temp, currentNode);
-   
-        cout << "Deleting: " << temp->data << endl;
-        delete temp;
-        }
-        // if it is a left child        
-   
-
-            }
+        else if (searchNum > current->data) { 
             
-    else if (temp->right == NULL && temp->left != NULL) { // if there is a right child BUT not a left CHILD (1 child)
-        //Node* x = temp->right; // setting the right child of the currentNode equal to X.
-       
-        if (temp->parent != NULL) {
+            // if the number the user entered is MORE THAN the fisrt node, we must traverse right (following BST property)
+            current = current->right;
+        } 
         
-      //  cout << "Temporary data: " << temp->data << endl;
-        Node* nodeToDelete = temp;
+        else if (searchNum < current->data) { 
+        // following BSt property, traverse left if nodei s not found
+            current = current->left;
+        }
+    }
+    return NULL; // if it reaches end, no noe bhas been found
+}
+
+
+
+
+Node* SUCCESSOR(Node* node) { 
+    // finding successor, will be useful in deletion
+    
+    if (node == NULL || node->right == NULL) {
         
-        //delete grandparent->right; 
-      //  if (temp->parent->right == temp) { // if current node is the left child
-         //   temp->parent->right = temp->right;
-       // } 
-      //  else { // if current node is the right child
+        return NULL;
+    }
+    
+    Node* current = node->right;
+    while (current->left != NULL) {
+      
+        current = current->left;
+    }
+    return current;
+}
+
+
+
+
+void DELETION(Node*& root, Node* search_start_node, int deleteNumber) {
+    Node* searchNode = SEARCH(search_start_node, deleteNumber);
+
+    if (searchNode == NULL) {
+        return; // no node isf ound
+    }
+
+    Node* y;
+    Node* x;
+    char originalColor;
+
+
+// these lines of code are from simon frazier univeresities RBT 
+    if (searchNode->left == NULL || searchNode->right == NULL) {
+        y = searchNode;
+    } // adjusts y accoridngly based on what type of deletion (one, zeor, two)
+    else {
+        y = SUCCESSOR(searchNode);
+    }
+
+    originalColor = y->color; // we gawther this, becaue wewill call deletionFIx with it
+
+    if (y->left != NULL) { // need to check if y->left exists...
+       // if()
+        x = y->left;
+    }
+    
+    else {
+        x = y->right;
+    }
+
+    Node* xParent = y->parent; 
+    // eventually, the parent of y wil be x's parent (following roatations, etc.)
+ 
+ 
+ 
+ //  else { // if current node is the right child
        // temp->left->parent = temp->parent->left;
         //temp->parent->right = temp->parent;
   
-    
-     if (temp->color == 'b' && temp->left != NULL && temp->left->color == 'r') {
-        temp->left->color = 'b';
+    if (x != NULL) { // x is the child of y, and will take y's spot in the RBT
+        x->parent = y->parent;
     }
-    
-    
-    if (temp->parent->right == temp) { // checking if child data is left or right child
-        temp->parent->right = temp->left;
-    }
-    else {
-        temp->parent->left = temp->left;
-    }
-       // temp->right->parent = temp->parent;
-       //if (temp->parent != NULL) {
-   // insertionFIX(temp, currentNode);
-               cout << "Deleting: " << temp->data << endl;
-    
-                delete temp;
 
-    }//}
+ if (y->parent == NULL) { 
+        root = x;
+    } 
+    
+    else if (y == y->parent->left) {
+    y->parent->left = x;
+    } 
+    
+    else {
+        
+        y->parent->right = x;
+    }
+
+    if (y != searchNode) { // searchNode holds 
+    // if y is the SUCCESESOR, we must copy y's data into searchNodes data.
+        searchNode->data = y->data;
+    }
+
+
+    Node* toDelete = y; // we will end up deleting htis,m ev entually
+
+    if (originalColor == 'b') { 
+        // start fixing ONLY if the original color 
+    // was black
+        if (x != NULL) {
+            Node* xSibling = NULL;
+        Node* xInsideNephew = NULL;
+        Node* xOutsideNephew = NULL;
+        // we create these variables so we can call the reassign varibale function here.
+            // otherwise it would  be out of scope ( trust me, i found out the hard way)
+   assignValues(x, xSibling, xInsideNephew, xOutsideNephew, x->parent);
+            deletionCHECK(root, x, xSibling, xInsideNephew, xOutsideNephew, x->parent);
+        } 
+        
+        else if (xParent != NULL) { 
+           Node* temp = new Node();
+            temp->parent = xParent;
+            temp->color = 'b';
+            //  temp->left->right = temp->parent;
      //   temp
 
+            temp->left = NULL;
+            temp->right = NULL;
+            temp->next = NULL;
 
-               }
-        // if it is a left child        
-
-         return root;
-
+            
+            if (xParent->left == x) { // x is the NULL left child
+                xParent->left = temp;
+            } 
+            
+            else if (xParent->right == x) {// x is the NULL right child
+                xParent->right = temp;
             }
 
+            Node* tempSibling = NULL;
+            // Node* 
+            Node* tempInsideNephew = NULL;
+            
+            Node* tempOutsideNephew = NULL;
 
-            //        }
-    }   
+            assignValues(temp, tempSibling, tempInsideNephew, tempOutsideNephew, xParent);
+            // we create these variables, becuase we are going to reassing them in our
+            // reassign function, then we can use them! #modularity
+          
+            deletionCHECK(root, temp, tempSibling, tempInsideNephew, tempOutsideNephew, xParent);
+
+           if (temp->parent != NULL) {
+             //  if (temp->parent->left == temp) { // if current node is the left child
+       //     temp->parent->left = temp->left;
+       
+                if (temp == temp->parent->left) {
+                    // temp->parent->right = NULL
+                    temp->parent->left = NULL; // null child
+                } 
+                
+                else {
+                    temp->parent->right = NULL; //NULL child
+                }
+           }
+            
+            
+            else if (root == temp) { // Should not happen if xParent was not NULL
+                root = NULL;
+            }
+            
+            delete temp;
+        }
+    
+    }
+    
+    delete toDelete;
+
+    if (root != NULL) { // always set root back to black (rbt propeyt)
+        root->color = 'b';
+    }
+}
+
+
+
+
+
+
+
+// I FOLLOWEWD WIKIPEDIDA FOR ALL CASES
+
+void caseTwo(Node*& root, Node* current, Node*& sibling, Node*& insideNephew, Node*& outsideNephew, Node*& parent) {
+    if (sibling != NULL) {
+        sibling->color = 'r';
+    }
+}
+
+
+
+
+
+
+bool caseThree(Node*& root, Node* current, Node*& sibling, Node*& insideNephew, Node*& outsideNephew, Node*& parent) {
+   // if (root == NULL && sibling == NULL && )
+    if (sibling == NULL || parent == NULL) { // if either of these are null
+    // function should not continue
+        return false;
+    }
+    sibling->color = 'b';
+    parent->color = 'r';
+
+    if (current == parent->left) {
+       // if (current != parent->right)
+        cout << "Left rotation case 3 " << endl;
+        leftRotation(root, parent);
+    } 
+    else { 
+        cout << "reaching right rotatiom for case 3" << endl;
+        rightRotation(root, parent);
+    }
+    cout << "Reached the  END of case three" << endl;
+    // ROTATION MEAN REaSSIGNMENT!
+    assignValues(current, sibling, insideNephew, outsideNephew, parent);
+    return false;
+}
+
+
+
+void caseFour(Node*& root, Node* current, Node*& sibling, Node*& insideNephew, Node*& outsideNephew, Node*& parent) {
+    
+    if (sibling != NULL) { // need to make sure sibling eixst before recolor
+        sibling->color = 'r';
+    }
+    if (parent != NULL) { // making sure parent exists, before recoloring
+        parent->color = 'b';
+    }
+    
+}
+
+void caseFive(Node*& root, Node* current, Node*& sibling, Node*& insideNephew, Node*& outsideNephew, Node*& parent) {
+    
+    
+        if (parent == NULL || sibling == NULL || insideNephew == NULL) { 
+        // all 3 of the variablse above are needed.
+        // therefore , if the function does not have them, need to restrat
+         return;
+    }
+    
+    
+    insideNephew->color = 'b';
+    sibling->color = 'r';
+
+    if (current == parent->left && sibling == parent->right) { 
+        // if current is left child, while the sibling is the right child,. should rotate
+        rightRotation(root, sibling);
+    } 
+else if (sibling == parent->left && current == parent->right) { // current is R, sibling is L, insideNephew is sibling->right
+        // OR , if the SIBLING is LEFT and the CURRENT is RIGHT child.
+        leftRotation(root, sibling);
     }
 
+
+    // we need to reASSIGN values AFTER ROTATION
+    assignValues(current, sibling, insideNephew, outsideNephew, parent); // This updates sibling and nephews
+   caseSix(root, current, sibling, insideNephew, outsideNephew, parent);
+}
+
+
+
+
+void caseSix(Node*& root, Node* current, Node*& sibling, Node*& insideNephew, Node*& outsideNephew, Node*& parent) {
     
     
+    if (parent == NULL) {
+        cout << "PARENT ODES NOT EXIST" << endl;
+        return; 
+        // this is if a parent diesnt exist
+}
+
+
+    if (sibling != NULL) {
+        sibling->color = parent->color;
+    }
+    parent->color = 'b';
+
+    if (outsideNephew != NULL) {
+        outsideNephew->color = 'b';
+    }
+
+
+    // DECIDING IF LEFT ROTATION OR RIGHT ROTATION.
+    if (current == parent->left) {
+//        cout << "rotating: " root->data << "and " << parent->data << endl;
+        leftRotation(root, parent);
+    } 
+    else if (current == parent->right) {
+        rightRotation(root, parent);
+    }
+    
+}
+
+
+// this function is for reassigning values following rotation
+
+Node* assignValues(Node*& current, Node*& sibling, Node*& insideNephew, Node*& outsideNephew, Node*& parent) {
+    if (current == NULL) {
+        // IF CURRENT DOES NOT EXIST WE SET EVERTYHIGN TO NULL AND RETURN
+        
+        sibling = NULL;
+        insideNephew = NULL;
+        outsideNephew = NULL;
+        
+        return current;
+    }
+
+    parent = current->parent;
+
+    if (parent == NULL) { // current is root
+        sibling = NULL;
+        insideNephew = NULL;
+        outsideNephew = NULL;
+        return current;
+    }
+
+    if (current == parent->left) {
+        
+        sibling = parent->right;
+        
+        if (sibling != NULL) {
+//outsideNephew= sibling->l
+    insideNephew = sibling->left;
+            outsideNephew = sibling->right;
+        } 
+        
+        else {
+            insideNephew = NULL;
+            outsideNephew = NULL;
+    }
+    }
+    
+    else if (current == parent->right) { 
+        sibling = parent->left;
+        if (sibling != NULL) {
+            insideNephew = sibling->right;
+            outsideNephew = sibling->left;
+        } 
+        
+        else {
+            insideNephew = NULL;
+            outsideNephew = NULL;
+        }
+}
+    return current;
+}
+
+
+
+void deletionCHECK(Node*& root, Node* current, Node*& sibling, Node*& insideNephew, Node*& outsideNephew, Node*& parent) {
+  
+  
+    while (current != root && (current == NULL || current->color == 'b')) {
+        
+        cout << "we get here "  << endl;
+        
+        if (current == NULL && parent == NULL && current != root) {
+            return;
+            
+        }
+
+
+        Node* tempParent;
+        
+        if (current !=  NULL) {
+            tempParent = current->parent;
+        }
+        else if (current == NULL) {
+            tempParent = parent;
+        }
+
+        if (tempParent == NULL && current != root) {
+             return;
+        }
+        
+        
+        parent = tempParent; 
+// if (root!= NULL) {
+        if (current != NULL) {
+            assignValues(current, sibling, insideNephew, outsideNephew, parent);
+        } 
+        
+        else { 
+            if (parent == NULL) {
+                return;  // if parent can not be found DNE
+            
+            }
+            bool nullLeftChild = true; 
+
+            if (parent->left == current) {
+                /* if (parent->right = true) {
+                    nullLeftChild = true;
+                }*/
+                nullLeftChild  = true;
+        }
+            else  if (parent->right == current) {
+                nullLeftChild = false; 
+            }
+            
+            // setting the siblign as the right child or left child
+            // accordingly!
+               
+              if (parent->left == NULL && parent->right != NULL) { 
+                //sibling->right = parent;
+                 sibling = parent->right;
+            } 
+            
+            else if (parent->right == NULL && parent->left != NULL) { 
+        cout << "setting sibling to parents left cihld " << endl;
+                 sibling = parent->left;
+            } 
+            
+            else if (parent->left == NULL && parent->right == NULL) { 
+                 sibling = NULL; 
+            } 
+            
+            else { 
+                if (parent->left == current) {
+                    sibling = parent->right; 
+                    // sibling is right
+                }
+                else if (parent->right == current) {
+                sibling = parent->left;
+            }
+      }
+
+            if (sibling != NULL) {
+                if (current == parent->left || (parent->left == current && current == NULL) ) { 
+                    // null child man
+                    insideNephew = sibling->left;
+                    outsideNephew = sibling->right;
+                } 
+                
+                else { // current is right or conceptual right NULL
+                    insideNephew = sibling->right;
+                    outsideNephew = sibling->left;
+                }
+            } 
+                    else {
+                        // must set nephews to null
+                        insideNephew = NULL;
+                        outsideNephew = NULL;
+                    }
+        }
+
+        if (parent == NULL && current != root) { 
+            return;  // need to make sure we are not at root, and that parent exists.
+        }
+        
+        
+
+
+        if (sibling != NULL && sibling->color == 'r') { // Case 1 (Your caseThree)
+            caseThree(root, current, sibling, insideNephew, outsideNephew, parent);
+           // reassign value functions will reassign any neccessary variables
+            continue;
+        }
+
+        // when sibling exists and sibling is black
+        bool SiblingChildrenBlack = true;
+        // We create this for simplicity
+        // if (sibling != NULL && )
+        if (sibling != NULL && sibling->color == 'b') { // Only check children if sibling exists
+            if (insideNephew != NULL && insideNephew->color == 'r') {
+                SiblingChildrenBlack = false;
+           
+            }
+            if (outsideNephew != NULL && outsideNephew->color == 'r') {
+                SiblingChildrenBlack = false;
+        } 
+        }
+        
+        else { 
+             SiblingChildrenBlack = true;
+        }
+
+
+        if (SiblingChildrenBlack == true) {
+            
+            if (parent != NULL && parent->color == 'r') { // calling case four
+               cout << "callign case 4" << endl;
+                caseFour(root, current, sibling, insideNephew, outsideNephew, parent);
+                if (current != NULL) {
+                    
+                    current->color = 'b';
+               return;
+            } 
+            }
+            
+            else { 
+                caseTwo(root, current, sibling, insideNephew, outsideNephew, parent);
+                current = parent; // Move problem up
+            
+            // if (root == NULL)
+                if (current == root || current == NULL) return; 
+               
+               // break;
+                continue;
+            }
+        } 
+        
+        else { // else then the siblingis black and has atleast one child that is
+             if (sibling == NULL) { 
+                 return; 
+             }
+
+            if (outsideNephew != NULL && outsideNephew->color == 'r') { // Case 4 (Your caseSix)
+                caseSix(root, current, sibling, insideNephew, outsideNephew, parent);
+                if (current != NULL) { 
+                    current->color = 'b';
+                 // current  need to exist.
+                }
+                
+                return;
+            
+            } 
+            else if (insideNephew != NULL && insideNephew->color == 'r') { // calling case 5
+                 //  else { // 
+                 // cout << "DELETION  FIXUP WE GET HERE!!!!" << endl;
+                 
+                 //
+                cout << "CASE 5 DEBUG" << endl;
+                caseFive(root, current, sibling, insideNephew, outsideNephew, parent);
+                if (current != NULL) {
+                    current->color = 'b';
+                }
+                 return;
+            } 
+            else {
+                return;
+                
+            } // wE MUST MAKE SURE TO RETURN EVERYTHING
+            // ANIKA's code did not work because she forgot to return..funny
+        }
+    }
+
+    if (current != NULL) { // ensuring after double blacknode we are on ends as Blck
+        // current->color= 'b'
+        
+        current->color = 'b';
+    }
+    if (root != NULL) { // always set root ot black
+        root->color = 'b';
+    }
 }
